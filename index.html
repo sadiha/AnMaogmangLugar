@@ -13,11 +13,66 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha13.622-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 	<script = "leaflet.ajax.min.js"></script>
 	
+	<style>#map { width: 800px; height: 500px; }
+/*Setup*/
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+html,
+body,
+#mapid {
+  height: 100%;
+  width: 100%;
+}
+
+/*Legend specific*/
+.legend {
+  padding: 6px 8px;
+  font: 14px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  /*box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);*/
+  /*border-radius: 5px;*/
+  line-height: 24px;
+  color: #555;
+}
+.legend h4 {
+  text-align: center;
+  font-size: 16px;
+  margin: 2px 12px 8px;
+  color: #777;
+}
+
+.legend span {
+  position: relative;
+  bottom: 3px;
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin: 0 8px 0 0;
+  opacity: 0.7;
+}
+
+.legend i.icon {
+  background-size: 18px;
+  background-color: rgba(255, 255, 255, 1);
+}</style>
+	
+	
 </head>
 <body>
 
 
-<div id="mapid" style="width: 1200px; height: 700px;"></div>
+<div id="mapid" style="width: 800px; height: 500px;"></div>
+<div id="mapid"></div>
+	<!--http://leafletjs.com/examples/choropleth/-->
+
+
 <script>
 
 	var mymap = L.map('mapid').setView([13.6218, 123.1948], 14);
@@ -82,9 +137,32 @@
 	
 	ctlLayers = L.control.layers(objOverlays).addTo(mymap);
 
+
+//LEGEND
+
+/*Setup*/
+
+/*Legend specific*/
+	var legend = L.control({ position: "bottomright" });
+
+	legend.onAdd = function(map) {
+	var div = L.DomUtil.create("div", "legend");
+		div.innerHTML += "<h4>LEGEND</h4>";
+		div.innerHTML += '<i style="background: #33a02c"></i><span>Agricultural</span><br>';
+		div.innerHTML += '<i style="background: #f6f31c"></i><span>Residential</span><br>';
+		div.innerHTML += '<i style="background: #e31a1c"></i><span>Commercial</span><br>';
+		div.innerHTML += '<i style="background: #a2639e"></i><span>Cemetery</span><br>';
+		div.innerHTML += '<i style="background: #0000ff"></i><span>???</span><br>';
+		div.innerHTML += '<i style="background: #15ee82"></i><span>???</span><br>';
+		div.innerHTML += '<i style="background: #13460f"></i><span>???</span><br>';	
+  
+
+	return div;
+	};
+
+	legend.addTo(mymap);
+
 </script>
-
-
 
 </body>
 </html>
